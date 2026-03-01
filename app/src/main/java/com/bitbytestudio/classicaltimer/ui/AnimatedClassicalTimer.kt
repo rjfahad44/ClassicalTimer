@@ -3,7 +3,6 @@ package com.bitbytestudio.classicaltimer.ui
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
-import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -29,10 +28,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -82,14 +79,14 @@ fun AnimatedClassicalTimer(
                 Spacer(Modifier.height(16.dp))
 
                 LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    items((1..30).toList()) { sec ->
+                    items((1..60).toList()) { sec ->
                         Box(
                             Modifier
                                 .size(48.dp)
                                 .clip(RoundedCornerShape(10.dp))
                                 .background(
                                     if (timerState.total == sec && timerState.isRunning)
-                                        Color(0xFF1565C0) else Color.LightGray
+                                        Color(0xFF1565C0) else Color.DarkGray
                                 )
                                 .clickable { controller.start(sec, scope) },
                             contentAlignment = Alignment.Center

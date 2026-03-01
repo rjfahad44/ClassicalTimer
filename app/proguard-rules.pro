@@ -19,3 +19,12 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# Compose
+-keep class androidx.compose.runtime.** { *; }
+-keep class androidx.compose.ui.** { *; }
+
+# Keep Compose runtime stability
+-keepclassmembers class ** {
+    @androidx.compose.runtime.Composable *** *(...);
+}
