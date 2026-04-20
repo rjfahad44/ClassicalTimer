@@ -100,6 +100,7 @@ fun AnimatedClassicalTimer(
 
                 AnimatedBallBox(
                     title = "Remaining",
+                    startIndex = 0,
                     ballCount = timerState.topBalls,
                     total = timerState.total,
                     isTop = true,
@@ -111,6 +112,7 @@ fun AnimatedClassicalTimer(
 
                 AnimatedBallBox(
                     title = "Elapsed",
+                    startIndex = timerState.topBalls,
                     ballCount = timerState.bottomBalls,
                     total = timerState.total,
                     isTop = false,

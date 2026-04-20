@@ -8,6 +8,7 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -43,6 +44,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun AnimatedBallBox(
     title: String,
+    startIndex: Int,
     ballCount: Int,
     total: Int,
     isTop: Boolean,
@@ -119,25 +121,20 @@ fun AnimatedBallBox(
         ) {
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
-                verticalArrangement = Arrangement.spacedBy(6.dp)
+                verticalArrangement = Arrangement.spacedBy(6.dp),
+                modifier = Modifier.animateContentSize()
             ) {
-                repeat(ballCount) { index ->
-                    val key = "ball_${isTop}_$index"
+                for (i in 0 until total) {
+                    val isVisible = i in startIndex until (startIndex + ballCount)
 
-                    with(sharedTransitionScope) {
+                    androidx.compose.animation.AnimatedVisibility(
+                        visible = isVisible,
+                        enter = androidx.compose.animation.fadeIn(tween(1000)) + androidx.compose.animation.scaleIn(tween(1000)),
+                        exit = androidx.compose.animation.fadeOut(tween(1000)) + androidx.compose.animation.scaleOut(tween(1000))
+                    ) {
                         Box(
                             Modifier
                                 .size(22.dp)
-                                .sharedElement(
-                                    rememberSharedContentState(key),
-                                    animatedVisibilityScope = animatedVisibilityScope,
-                                    boundsTransform = { _, _ ->
-                                        spring(
-                                            dampingRatio = Spring.DampingRatioMediumBouncy,
-                                            stiffness = Spring.StiffnessMediumLow
-                                        )
-                                    }
-                                )
                                 .clip(CircleShape)
                                 .background(color)
                         )

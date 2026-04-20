@@ -31,6 +31,14 @@ class ClassicalTimerController {
         stop()
         totalSeconds = seconds
         remainingSeconds = seconds
+        _state.value = TimerState(
+            total = totalSeconds,
+            remaining = remainingSeconds,
+            topBalls = remainingSeconds,
+            bottomBalls = 0,
+            isRunning = true,
+            isPaused = false
+        )
         launchTimer(scope)
     }
 
